@@ -2,6 +2,7 @@ package tests;
 
 import config.Config;
 import io.restassured.response.Response;
+import model.UserRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -81,6 +82,19 @@ public class UsersTests extends Config {
     }
 
     @Test(priority = 4)
+    public void createUserUsingJavaObjectTest(){
+
+        UserRequest userRequest = UserRequest.createUser();
+
+        Response response = given()
+                .body(userRequest)
+                .when().post(CREATE_USER);
+
+        this.userId = response.jsonPath().get("id");
+
+    }
+
+    @Test(priority = 5)
     public void updateUserTest(){
 
         String body = "{\n" +
@@ -107,7 +121,7 @@ public class UsersTests extends Config {
                 .when().put(UPDATE_USER);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 6)
     public void deleteUserTest(){
 
         Response response = given()

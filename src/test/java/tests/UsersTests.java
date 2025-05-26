@@ -1,13 +1,16 @@
 package tests;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import config.Config;
 import io.restassured.response.Response;
-import model.UserRequest;
-import model.UserResponse;
+import listeners.TestListeners;
+import model.UserModel.UserRequest;
+import model.UserModel.UserResponse;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-import utils.Constants;
+import service.UserService;
 
 import static utils.Constants.*;
 
@@ -15,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
-
+@Listeners(TestListeners.class)
 public class UsersTests extends Config {
 
     String userId;
@@ -145,15 +148,32 @@ public class UsersTests extends Config {
 
         String userId = response.getId();
 
-        UserResponse updatedUserResponse = given()
+        //Ovde hvatamo response kao običan response a ne kao UserResponse objekat jer ćemo to odraditi kasnije
+        Response updatedUserResponse = given()
                 .body(updateUser)
                 .pathParam("id", userId)
-                .when().put(UPDATE_USER).getBody().as(UserResponse.class);
+                .when().put(UPDATE_USER); //.getBody().as(UserResponse.class);
 
-        boolean isFirstNameUpdated = updatedUserResponse.getFirstName().equals(updatedFirstName);
+        //Ovde hvatamo status code jer Jackson ne može to sam da radi, on se bavi samo JSON-om!!
+        int statusCode = updatedUserResponse.getStatusCode();
+
+        //Ovde definišemo novu promenljivu tipa UserResponse kako bi od response-a napravili objekat tipa UserResponse
+        UserResponse updatedUserResponse1 = null;
+        try {
+            //sad pravimo objekat
+            ObjectMapper objectMapper = new ObjectMapper();
+            //novi objekat čita sadržaj response-a kao stringove i smešta ih u svoja polja
+            updatedUserResponse1 = objectMapper.readValue(updatedUserResponse.getBody().asString(), UserResponse.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        boolean isFirstNameUpdated = updatedUserResponse1.getFirstName().equals(updatedFirstName);
         SoftAssert softAssert = new SoftAssert();
+        //provera status koda:
+        softAssert.assertEquals(statusCode, 200, "Expected 200 but got: " + statusCode);
         softAssert.assertTrue(isFirstNameUpdated, "First name not updated!");
-        softAssert.assertEquals(updatedUserResponse.getLocation().getCity(), updatedCity, "City not updated!");
+        softAssert.assertEquals(updatedUserResponse1.getLocation().getCity(), updatedCity, "City not updated!");
         softAssert.assertAll();
     }
 

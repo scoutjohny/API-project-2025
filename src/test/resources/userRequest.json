@@ -1,0 +1,19 @@
+{
+  "id": "68389d8a7a33756ecefe2a79",
+  "title": "ms",
+  "firstName": "Meaghan",
+  "lastName": "Frami",
+  "picture": "http://lorempixel.com/8/3/sports/7.jpg",
+  "gender": "female",
+  "email": "ciara.lakin@yahoo.com",
+  "dateOfBirth": "1985-05-14T06:22:25.000Z",
+  "phone": "1-719-831-1982",
+  "location": {
+    "street": "30355 Lang Greens",
+    "city": "Port Jenellestad",
+    "state": "Arkansas",
+    "country": "Bhutan"
+  },
+  "registerDate": "2025-05-29T17:46:50.470Z",
+  "updatedDate": "2025-05-29T17:46:50.470Z"
+}

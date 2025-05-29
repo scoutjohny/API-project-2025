@@ -7,10 +7,12 @@ import listeners.TestListeners;
 import model.UserModel.UserRequest;
 import model.UserModel.UserResponse;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import service.UserService;
+import utils.Utils;
 
 import static utils.Constants.*;
 
@@ -22,7 +24,11 @@ import static io.restassured.RestAssured.given;
 public class UsersTests extends Config {
 
     String userId;
-
+    SoftAssert softAssert;
+    @BeforeMethod(alwaysRun = true)
+    public void setup() {
+        softAssert = new SoftAssert();
+    }
     @Test(priority = 1)
     public void getUsersTest() {
 
@@ -36,7 +42,6 @@ public class UsersTests extends Config {
 
         this.userId = response.jsonPath().get("data[0].id");
 
-        SoftAssert softAssert = new SoftAssert();
         String actualFirstName = response.jsonPath().get("data[0].firstName");
         softAssert.assertEquals(response.getStatusCode(), 200, "Expected 200 but got: " + response.getStatusCode());
         softAssert.assertEquals(actualFirstName, "Sara");
@@ -169,7 +174,7 @@ public class UsersTests extends Config {
         }
 
         boolean isFirstNameUpdated = updatedUserResponse1.getFirstName().equals(updatedFirstName);
-        SoftAssert softAssert = new SoftAssert();
+
         //provera status koda:
         softAssert.assertEquals(statusCode, 200, "Expected 200 but got: " + statusCode);
         softAssert.assertTrue(isFirstNameUpdated, "First name not updated!");
@@ -195,6 +200,12 @@ public class UsersTests extends Config {
                 .when().delete(DELETE_USER);
         Assert.assertEquals(response1.getStatusCode(), 404, "Expected 404 but got: " + response1.getStatusCode());
 
+    }
+
+    @Test
+    public void readFromJson(){
+        UserResponse userResponse = Utils.getUserFromJson("userRequest");
+        System.out.println(userResponse);
     }
 
 }

@@ -1,0 +1,6 @@
+2025-06-02 18:21:45.870 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: getUsersTest
+2025-06-02 18:21:50.954 [main] INFO  listeners.TestListeners - TEST METHOD: getUsersTest SKIPPED!
+2025-06-02 18:21:50.957 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: getUsersTest
+2025-06-02 18:21:52.667 [main] INFO  listeners.TestListeners - TEST METHOD: getUsersTest SKIPPED!
+2025-06-02 18:21:52.676 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: getUsersTest
+2025-06-02 18:21:54.529 [main] INFO  listeners.TestListeners - TEST METHOD: getUsersTest FAILED!

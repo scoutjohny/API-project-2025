@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-    <suite name="All Test Suite" >
-
-        <test verbose="2" preserve-order="true" name="D:/Programiranje/Osnove API testiranja - Qaitive/Sasa Stjepanovic/Kod sa casa/API-project-2025/src/main/resources">
-            <classes>
-                <class name="tests.UsersTests"/>
-            </classes>
-        </test>
+<suite name="All Test Suite">
+    <test preserve-order="true" name="API">
+        <classes>
+            <class name="tests.UsersTests"/>
+        </classes>
+    </test>
 </suite>

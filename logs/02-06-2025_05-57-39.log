@@ -1,0 +1,16 @@
+2025-06-02 17:57:40.153 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: readFromJson
+2025-06-02 17:57:40.523 [main] INFO  listeners.TestListeners - TEST METHOD: readFromJson SUCCESSFUL
+2025-06-02 17:57:41.051 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: getUsersTest
+2025-06-02 17:57:43.856 [main] INFO  listeners.TestListeners - TEST METHOD: getUsersTest SUCCESSFUL
+2025-06-02 17:57:43.880 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: getUserByIdTest
+2025-06-02 17:57:44.231 [main] INFO  listeners.TestListeners - TEST METHOD: getUserByIdTest SUCCESSFUL
+2025-06-02 17:57:44.259 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: createUserTest
+2025-06-02 17:57:44.702 [main] INFO  listeners.TestListeners - TEST METHOD: createUserTest SUCCESSFUL
+2025-06-02 17:57:44.740 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: createUserUsingJavaObjectTest
+2025-06-02 17:57:47.118 [main] INFO  listeners.TestListeners - TEST METHOD: createUserUsingJavaObjectTest SUCCESSFUL
+2025-06-02 17:57:47.181 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: updateUserTest
+2025-06-02 17:57:47.588 [main] INFO  listeners.TestListeners - TEST METHOD: updateUserTest SUCCESSFUL
+2025-06-02 17:57:47.640 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: updateUserTestUsingJavaObject
+2025-06-02 17:57:49.368 [main] INFO  listeners.TestListeners - TEST METHOD: updateUserTestUsingJavaObject SUCCESSFUL
+2025-06-02 17:57:49.421 [main] INFO  listeners.TestListeners - STARTING TEST METHOD: deleteUserTest
+2025-06-02 17:57:50.079 [main] INFO  listeners.TestListeners - TEST METHOD: deleteUserTest SUCCESSFUL

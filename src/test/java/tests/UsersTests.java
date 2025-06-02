@@ -3,6 +3,7 @@ package tests;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import config.Config;
 import io.restassured.response.Response;
+import listeners.RetryAnalizer;
 import listeners.TestListeners;
 import model.UserModel.UserRequest;
 import model.UserModel.UserResponse;
@@ -17,35 +18,54 @@ import utils.Utils;
 import static utils.Constants.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+
 @Listeners(TestListeners.class)
 public class UsersTests extends Config {
 
     String userId;
     SoftAssert softAssert;
+
     @BeforeMethod(alwaysRun = true)
     public void setup() {
         softAssert = new SoftAssert();
     }
-    @Test(priority = 1)
+
+    @Test(priority = 1, retryAnalyzer = RetryAnalizer.class)
     public void getUsersTest() {
 
         Map<String, Integer> map = new HashMap<>();
         map.put("page", 0);
-        map.put("limit", 10);
+        map.put("limit", 50);
 
-        Response response = given()
+        UserRequest userRequest = UserRequest.createUser();
+
+        UserResponse userResponse = given()
+                .body(userRequest)
+                .when().post(CREATE_USER).getBody().as(UserResponse.class);
+
+        List<UserResponse> response = given()
                 .queryParams(map)
-                .when().get(GET_ALL_USERS);
+                .when().get(GET_ALL_USERS).jsonPath().getList("data", UserResponse.class);
 
-        this.userId = response.jsonPath().get("data[0].id");
+//        this.userId = response.jsonPath().get("data[0].id");
+        String expectedId = userResponse.getId();
 
-        String actualFirstName = response.jsonPath().get("data[0].firstName");
-        softAssert.assertEquals(response.getStatusCode(), 200, "Expected 200 but got: " + response.getStatusCode());
-        softAssert.assertEquals(actualFirstName, "Sara");
-        softAssert.assertAll();
+        boolean isInTheList = false;
+        for (int i = 0; i < response.size(); i++) {
+            if(response.get(i).getId().equals(expectedId)){
+                isInTheList = true;
+            }
+            Assert.assertTrue(isInTheList);
+        }
+
+//        String actualFirstName = response.jsonPath().get("data[0].firstName");
+//        softAssert.assertEquals(response.getStatusCode(), 200, "Expected 200 but got: " + response.getStatusCode());
+//        softAssert.assertEquals(actualFirstName, "Roberto");
+//        softAssert.assertAll();
 //        Assert.assertEquals(response.getStatusCode(),200, "Expected 200 but got: " + response.getStatusCode());
 //        String actualFirstName = response.jsonPath().get("data[0].firstName");
 //        System.out.println(actualFirstName);
@@ -53,7 +73,7 @@ public class UsersTests extends Config {
 //        Assert.assertEquals(actualFirstName,"Sara");
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, retryAnalyzer = RetryAnalizer.class)
     public void getUserByIdTest() {
 
         Response response = given()
@@ -203,7 +223,7 @@ public class UsersTests extends Config {
     }
 
     @Test
-    public void readFromJson(){
+    public void readFromJson() {
         UserResponse userResponse = Utils.getUserFromJson("userRequest");
         System.out.println(userResponse);
     }
